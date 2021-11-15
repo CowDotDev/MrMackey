@@ -1,0 +1,23 @@
+{
+  "name": "mrmackey",
+  "version": "1.0.0",
+  "description": "Discord Bot",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CowDotDev/MrMackey.git"
+  },
+  "keywords": [
+    "Discord",
+    "Bot"
+  ],
+  "author": "CowDotDev",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/CowDotDev/MrMackey/issues"
+  },
+  "homepage": "https://github.com/CowDotDev/MrMackey#readme"
+}
