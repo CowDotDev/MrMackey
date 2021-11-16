@@ -1,10 +1,3 @@
-import { getSecret } from '#lib/secrets';
+import { login } from '#lib/client';
 
-const init = async () => {
-  const test = await getSecret('test-secret');
-
-  // eslint-disable-next-line no-console
-  console.log(test);
-};
-
-void init();
+void login();

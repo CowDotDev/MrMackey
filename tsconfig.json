@@ -16,6 +16,8 @@
     "rootDir": ".",
     "baseUrl": ".",
     "paths": {
+      "#/*": ["src/*"],
+      "#commands/*": ["src/commands/*"],
       "#lib/*": ["src/lib/*"]
     }
   }
