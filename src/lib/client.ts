@@ -18,9 +18,9 @@ export const login = async () => {
 
   const registerSlashCommands = async () => {
     try {
-      console.info('Started refreshing application (/) commands.');
+      console.log('Started refreshing application (/) commands.');
       await rest.put(Routes.applicationCommands(clientId), { body: CommandsData });
-      console.info('Successfully reloaded application (/) commands.');
+      console.log('Successfully reloaded application (/) commands.');
     } catch (error) {
       console.error('Error refreshing application (/) commands.');
     }
@@ -28,7 +28,7 @@ export const login = async () => {
 
   // When the client is ready, run this code (only once)
   client.once('ready', () => {
-    console.info('Bot Ready!');
+    console.log('Bot Ready!');
     registerSlashCommands();
   });
 

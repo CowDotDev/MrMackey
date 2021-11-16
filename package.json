@@ -10,7 +10,7 @@
     "prepare": "npx husky install",
     "check": "npm run lint && npm run prettier && npm run test",
     "start": "ts-node -r tsconfig-paths/register index.ts",
-    "deploy": "npm run build && gcloud app deploy"
+    "deploy": "gcloud app deploy"
   },
   "repository": {
     "type": "git",
