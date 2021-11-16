@@ -11,8 +11,8 @@ import { Routes } from 'discord-api-types/v9';
 export const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
 
 export const login = async () => {
-  const botToken = process.env.BOT_TOKEN_OVERRIDE || (await getSecret('bot-token'));
-  const clientId = process.env.BOT_CLIENT_ID_OVERRIDE || (await getSecret('bot-client-id'));
+  const botToken = await getSecret('bot-token');
+  const clientId = await getSecret('bot-client-id');
 
   const rest = new REST({ version: '9' }).setToken(botToken);
 
