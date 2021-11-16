@@ -1,19 +1,22 @@
 {
+  "extends": "@tsconfig/recommended/tsconfig.json",
+  "include": ["src/**/*", "__tests__/**/*", "*.js", "*.ts"],
+  "exclude": ["node_modules"],
   "compilerOptions": {
     "strict": true,
-    "target": "es5",
-    "module": "commonjs",
+    "target": "ES2019",
     "moduleResolution": "node",
-    "rootDir": "./",
-    "baseUrl": "./",
-    "noResolve": true,
-    "skipLibCheck": true /* Skip type checking all .d.ts files. */,
-    "esModuleInterop": true,
-    "resolveJsonModule": true,
     "experimentalDecorators": true,
-    "forceConsistentCasingInFileNames": true,
-    "paths": {}
-  },
-  "include": ["**/*.ts"],
-  "exclude": ["node_modules"]
+    "emitDecoratorMetadata": true,
+    "resolveJsonModule": true,
+    "noImplicitAny": false,
+    "isolatedModules": true,
+    "strictPropertyInitialization": false,
+    "useUnknownInCatchVariables": false,
+    "rootDir": ".",
+    "baseUrl": ".",
+    "paths": {
+      "#lib/*": ["src/lib/*"]
+    }
+  }
 }

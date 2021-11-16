@@ -1,0 +1,4 @@
+# https://cloud.google.com/appengine/docs/flexible/nodejs/configuring-your-app-with-app-yaml
+runtime: nodejs16
+env: standard
+instance_class: F1
