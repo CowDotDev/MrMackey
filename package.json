@@ -9,7 +9,8 @@
     "prettier": "prettier --write .",
     "prepare": "npx husky install",
     "check": "npm run lint && npm run prettier && npm run test",
-    "start": "ts-node -r tsconfig-paths/register index.ts",
+    "start": "nohup ts-node -r tsconfig-paths/register index.ts > log.txt 2>&1 & echo $! > pid.txt",
+    "stop": "kill $(tail pid.txt)",
     "deploy": "gcloud app deploy"
   },
   "repository": {
