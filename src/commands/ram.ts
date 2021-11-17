@@ -32,8 +32,8 @@ export default {
       }
 
       const sceneIndex = Math.floor(Math.random() * sceneResults.length);
-      const sceneTimestamp = parseInt(sceneResults[sceneIndex].Timestamp, 10);
-      const sceneEpisode = parseInt(sceneResults[sceneIndex].Episode, 10);
+      const sceneTimestamp = +sceneResults[sceneIndex].Timestamp;
+      const sceneEpisode = sceneResults[sceneIndex].Episode;
       const { data: gifResult } = await api.get(
         `https://masterofallscience.com/api/caption?e=${sceneEpisode}&t=${sceneTimestamp}`,
       );
