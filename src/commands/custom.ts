@@ -168,11 +168,13 @@ class CustomCommands {
     Collection<string, Collection<string, CommandObject>>
   > {
     const collectionList = await fetchCollectionList();
-    const customCommandsCollections = collectionList.filter(
-      (collection) => collection?.id?.includes('custom-commands') ,
+    const customCommandsCollections = collectionList.filter((collection) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      collection?.id?.includes('custom-commands'),
     );
-    const existingGuildIds = customCommandsCollections.map(
-      (collection) => collection.id.replace('custom-commands', '') ,
+    const existingGuildIds = customCommandsCollections.map((collection) =>
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
+      collection.id.replace('custom-commands', ''),
     );
 
     for (const guildId of existingGuildIds) {
