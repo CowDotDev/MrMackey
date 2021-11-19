@@ -37,7 +37,7 @@ export const login = async () => {
 
   // When the client is ready, run this code (only once)
   client.once('ready', async () => {
-    console.log('Bot Ready!');
+    console.log('Bot Ready! - ' + botMode);
 
     CommandsService = new CustomCommands(botToken, clientId);
 
