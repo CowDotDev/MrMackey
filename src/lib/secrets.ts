@@ -7,7 +7,7 @@ const client = new SecretManagerServiceClient();
 
 export const getSecret = async (name: string) => {
   const [version] = await client.accessSecretVersion({
-    name: `${process?.env?.GCP_PROJECT}/secrets/${name}/versions/1`,
+    name: `${process?.env?.GCP_PROJECT}/secrets/${name}/versions/latest`,
   });
 
   // Extract the payload as a string.

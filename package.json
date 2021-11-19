@@ -9,6 +9,7 @@
     "prettier": "prettier --write .",
     "prepare": "npx husky install",
     "check": "npm run lint && npm run prettier && npm run test",
+    "start:local": "ts-node -r tsconfig-paths/register index.ts",
     "start": "nohup ts-node -r tsconfig-paths/register index.ts > log.txt 2>&1 & echo $! > pid.txt",
     "stop": "kill $(tail pid.txt)",
     "deploy": "gcloud app deploy"
@@ -50,21 +51,22 @@
     "*.{js,json,ts,tsx,css,md}": "prettier --write"
   },
   "dependencies": {
+    "@discordjs/builders": "^0.8.2",
+    "@discordjs/rest": "^0.1.0-canary.0",
+    "@google-cloud/firestore": "^4.15.1",
+    "@google-cloud/secret-manager": "^3.10.1",
     "@tsconfig/recommended": "^1.0.1",
     "@types/jest": "^27.0.2",
     "@types/node": "^16.11.7",
     "@typescript-eslint/eslint-plugin": "^5.4.0",
     "@typescript-eslint/parser": "^5.4.0",
-    "@discordjs/builders": "^0.8.2",
-    "@discordjs/rest": "^0.1.0-canary.0",
-    "@google-cloud/secret-manager": "^3.10.1",
     "axios": "^0.24.0",
     "discord-api-types": "^0.24.0",
     "discord.js": "^13.3.1",
     "dotenv": "^10.0.0",
     "ts-node": "^10.4.0",
-    "typescript": "^4.4.4",
     "tsconfig-paths": "^3.11.0",
-    "tslib": "^2.3.1"
+    "tslib": "^2.3.1",
+    "typescript": "^4.4.4"
   }
 }

@@ -241,7 +241,7 @@ module.exports = {
     'no-bitwise': 'error',
     'no-caller': 'error',
     'no-cond-assign': 'error',
-    'no-console': 'error',
+    'no-console': 'off',
     'no-debugger': 'error',
     'no-duplicate-case': 'error',
     'no-duplicate-imports': 'error',
@@ -288,6 +288,6 @@ module.exports = {
     'use-isnan': 'error',
     'valid-typeof': 'off',
     'object-curly-spacing': ['error', 'always'],
-    'modules-newline/import-declaration-newline': 'error',
+    'modules-newline/import-declaration-newline': 'off',
   },
 };

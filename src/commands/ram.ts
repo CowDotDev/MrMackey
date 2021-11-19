@@ -22,7 +22,7 @@ export default {
     await interaction.deferReply();
 
     try {
-      const searchTerm = interaction.options.getString('query');
+      const searchTerm = interaction.options.getString('query') || '';
       const { data: sceneResults } = await api.get(
         `https://masterofallscience.com/api/search?q=${encodeURIComponent(searchTerm)}`,
       );

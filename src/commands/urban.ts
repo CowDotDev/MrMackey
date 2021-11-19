@@ -21,7 +21,7 @@ export default {
     await interaction.deferReply();
 
     try {
-      const search = interaction.options.getString('query');
+      const search = interaction.options.getString('query') || '';
       const searchUriEncoded = encodeURIComponent(search);
 
       const { data: res } = await api.get(

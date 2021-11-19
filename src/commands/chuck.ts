@@ -12,7 +12,7 @@ export default {
     await interaction.deferReply();
 
     try {
-      const joke = await api.get('http://api.icndb.com/jokes/random');
+      const { data: joke } = await api.get<string>('http://api.icndb.com/jokes/random');
       await interaction.editReply(joke);
     } catch (e) {
       // eslint-disable-next-line no-console
