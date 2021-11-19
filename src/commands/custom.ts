@@ -20,10 +20,14 @@ class CustomCommands {
     this.clientId = clientId;
   }
 
-  private isCommandTaken(command: string, guildId: string) {
+  private isGuildCustomCommandTaken(command: string, guildId: string) {
     const guildCustomCommands =
       this.customCommands.get(guildId) || new Collection<string, CommandObject>();
-    return this.baseCommands.has(command) || guildCustomCommands.has(command);
+    return guildCustomCommands.has(command);
+  }
+
+  private isBaseCommand(command: string) {
+    return this.baseCommands.has(command);
   }
 
   private async updateCustomCommands(guildId: string) {
@@ -111,7 +115,11 @@ class CustomCommands {
     // Make sure command isn't false, and that command is more than just dashes
     const sanitizedCommand = command && command.replace('-', '');
     if (command && sanitizedCommand !== '') {
-      if (this.isCommandTaken(command, guildId)) {
+      if (this.isBaseCommand(command)) {
+        await interaction.editReply({
+          content: `${command} is reserved, please use a different command name.`,
+        });
+      } else if (this.isGuildCustomCommandTaken(command, guildId)) {
         // Command exists, we need to confirm if the user wants to overwrite the existing reaction.
         const row = new MessageActionRow().addComponents(
           new MessageSelectMenu()
@@ -160,11 +168,11 @@ class CustomCommands {
     Collection<string, Collection<string, CommandObject>>
   > {
     const collectionList = await fetchCollectionList();
-    const customCommandsCollections = collectionList.filter(
-      (collection) => collection?.id?.includes('custom-commands') ,
+    const customCommandsCollections = collectionList.filter((collection) =>
+      collection?.id?.includes('custom-commands'),
     );
-    const existingGuildIds = customCommandsCollections.map(
-      (collection) => collection.id.replace('custom-commands', '') ,
+    const existingGuildIds = customCommandsCollections.map((collection) =>
+      collection.id.replace('custom-commands', ''),
     );
 
     for (const guildId of existingGuildIds) {
