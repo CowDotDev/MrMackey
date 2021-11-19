@@ -11,7 +11,11 @@ const db = new Firestore({
 });
 
 export const Collections = {
-  CustomCommands: db.collection('custom-commands'),
+  CustomCommands: (guildId: string) => db.collection(`custom-commands-${guildId}`),
 };
+
+export function fetchCollectionList() {
+  return db.listCollections();
+}
 
 export default db;

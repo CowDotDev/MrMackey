@@ -4,7 +4,7 @@ import { Routes } from 'discord-api-types/v9';
 import { Collection, CommandInteraction, MessageActionRow, MessageSelectMenu } from 'discord.js';
 
 import { CommandObject, ICustomCommand } from '#/types';
-import { Collections, converter } from '#lib/database';
+import { Collections, converter, fetchCollectionList } from '#lib/database';
 
 class CustomCommands {
   private botToken: string;
@@ -51,12 +51,15 @@ class CustomCommands {
       },
     } as CommandObject;
 
-    await Collections.CustomCommands.withConverter(converter<ICustomCommand>()).doc(command).set({
-      guildId,
-      command,
-      reaction,
-      user,
-    });
+    await Collections.CustomCommands(guildId)
+      .withConverter(converter<ICustomCommand>())
+      .doc(command)
+      .set({
+        guildId,
+        command,
+        reaction,
+        user,
+      });
 
     const guildCustomCommands =
       this.customCommands.get(guildId) || new Collection<string, CommandObject>();
@@ -156,28 +159,36 @@ class CustomCommands {
   async getExistingCustomCommands(): Promise<
     Collection<string, Collection<string, CommandObject>>
   > {
-    const existingCustomCommands = await Collections.CustomCommands.withConverter(
-      converter<ICustomCommand>(),
-    ).get();
+    const collectionList = await fetchCollectionList();
+    const customCommandsCollections = collectionList.filter(
+      (collection) => collection?.id?.includes('custom-commands') ,
+    );
+    const existingGuildIds = customCommandsCollections.map(
+      (collection) => collection.id.replace('custom-commands', '') ,
+    );
 
-    existingCustomCommands.forEach((doc) => {
-      const docData = doc.data();
-      const cmd = {
-        data: new SlashCommandBuilder()
-          .setName(docData.command)
-          .setDescription(`Custom command created by ${docData.user}`),
-        execute: async (interaction) => {
-          await interaction.reply(docData.reaction);
-        },
-      } as CommandObject;
+    for (const guildId of existingGuildIds) {
+      const existingCustomCommands = await Collections.CustomCommands(guildId)
+        .withConverter(converter<ICustomCommand>())
+        .get();
 
-      if (docData.guildId) {
+      existingCustomCommands.forEach((doc) => {
+        const docData = doc.data();
+        const cmd = {
+          data: new SlashCommandBuilder()
+            .setName(docData.command)
+            .setDescription(`Custom command created by ${docData.user}`),
+          execute: async (interaction) => {
+            await interaction.reply(docData.reaction);
+          },
+        } as CommandObject;
+
         const guildCustomCommands =
-          this.customCommands.get(docData.guildId) || new Collection<string, CommandObject>();
+          this.customCommands.get(guildId) || new Collection<string, CommandObject>();
         guildCustomCommands.set(cmd.data.name, cmd);
-        this.customCommands.set(docData.guildId, guildCustomCommands);
-      }
-    });
+        this.customCommands.set(guildId, guildCustomCommands);
+      });
+    }
 
     return this.customCommands;
   }
