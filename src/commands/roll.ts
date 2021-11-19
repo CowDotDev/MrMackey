@@ -16,11 +16,13 @@ export default {
         .setRequired(true),
     ),
   execute: async (interaction) => {
-    const dice = interaction.options.getString('query') || '';
+    const dice = interaction.options.getString('dice') || '';
     const allDice = dice.split(' ');
 
-    const validDiceTest = new RegExp(/^[1-9]{1}[0-9]{0,1}d+[1-9]{1}[0-9]{0,2}$$/g); // [1-99]d[1-999]
-    const validDice = allDice.filter((d) => validDiceTest.test(d));
+    const validDiceTest = new RegExp(/^[1-9]{1}[0-9]{0,1}d+[1-9]{1}[0-9]{0,2}$/g); // [1-99]d[1-999]
+    const validDice = allDice.filter((d) => {
+      return d.match(validDiceTest);
+    });
 
     if (validDice.length > 0) {
       const totalRolls = validDice.map((d) => {
@@ -54,10 +56,14 @@ export default {
           }
           return roll;
         });
-        return `${d.die} | ${indRolls.join(' + ')} (${dieTotal})`;
+
+        const rollsAndTotal = indRolls.length > 1 ? ` | ${indRolls.join(' + ')} (${dieTotal})` : '';
+        return d.die + rollsAndTotal;
       });
 
-      await interaction.reply(`**Dice:** ${totalDice.join(' + ')}\n**Total:** ${total}`);
+      await interaction.reply(
+        `**Dice:**${totalDice.length > 1 ? '\n' : ' '}${totalDice.join('\n')}\n**Total:** ${total}`,
+      );
     } else {
       await interaction.reply("Didn't find any dice... m'kay");
     }

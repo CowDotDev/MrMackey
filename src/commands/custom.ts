@@ -168,11 +168,11 @@ class CustomCommands {
     Collection<string, Collection<string, CommandObject>>
   > {
     const collectionList = await fetchCollectionList();
-    const customCommandsCollections = collectionList.filter((collection) =>
-      collection?.id?.includes('custom-commands'),
+    const customCommandsCollections = collectionList.filter(
+      (collection) => collection?.id?.includes('custom-commands') ,
     );
-    const existingGuildIds = customCommandsCollections.map((collection) =>
-      collection.id.replace('custom-commands', ''),
+    const existingGuildIds = customCommandsCollections.map(
+      (collection) => collection.id.replace('custom-commands', '') ,
     );
 
     for (const guildId of existingGuildIds) {
@@ -231,9 +231,10 @@ class CustomCommands {
     console.log('Successfully Registered Custom Commands');
   }
 
-  getAllCommands(guildId: string) {
-    const guildCustomCommands =
-      this.customCommands.get(guildId) || new Collection<string, CommandObject>();
+  getAllCommands(guildId?: string) {
+    const guildCustomCommands = guildId
+      ? this.customCommands.get(guildId) || new Collection<string, CommandObject>()
+      : new Collection<string, CommandObject>();
     return {
       Commands: this.baseCommands.concat(guildCustomCommands),
     };

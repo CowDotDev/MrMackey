@@ -6,7 +6,6 @@ import { REST } from '@discordjs/rest';
 import { Client, Intents } from 'discord.js';
 
 import { Routes } from 'discord-api-types/v9';
-import { SlashCommandBuilder } from '@discordjs/builders';
 import CustomCommands from '#commands/custom';
 
 let CommandsService;
@@ -55,9 +54,15 @@ export const login = async () => {
   client.on('interactionCreate', async (interaction) => {
     if (!interaction.isCommand()) return;
 
-    const { Commands } = CommandsService.getAllCommands(interaction?.guildId);
+    const { Commands } = CommandsService.getAllCommands(interaction?.guildId as string | undefined);
     const command = Commands.get(interaction.commandName);
-    if (!command) return;
+    if (!command) {
+      await interaction.reply({
+        content: `/${interaction.commandName} was not found. `,
+        ephemeral: true,
+      });
+      return;
+    }
 
     try {
       await command.execute(interaction);
@@ -65,10 +70,9 @@ export const login = async () => {
       console.error(error);
       const options = {
         content: 'There was an error while executing this command!',
-        ephemeral: true,
       };
       !interaction.replied && !interaction.deferred
-        ? await interaction.reply(options)
+        ? await interaction.reply({ ...options, ephemeral: true })
         : await interaction.editReply(options);
     }
   });

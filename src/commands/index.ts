@@ -1,4 +1,3 @@
-import { SlashCommandBuilder } from '@discordjs/builders';
 import { Collection } from 'discord.js';
 
 import { CommandObject } from '#/types';

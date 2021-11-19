@@ -12,8 +12,10 @@ export default {
     await interaction.deferReply();
 
     try {
-      const { data: joke } = await api.get<string>('http://api.icndb.com/jokes/random');
-      await interaction.editReply(joke);
+      const { data } = await api.get('http://api.icndb.com/jokes/random');
+      await interaction.editReply(
+        data?.value?.joke || "No one can joke about Chuck Norris... m'kay",
+      );
     } catch (e) {
       // eslint-disable-next-line no-console
       console.error('Error requesting Chuck Norris joke.', e);
