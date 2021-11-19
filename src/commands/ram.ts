@@ -31,7 +31,7 @@ export default {
         await interaction.editReply('Nothing found for that term!');
       }
 
-      const sceneIndex = Math.floor(Math.random() * sceneResults.length);
+      const sceneIndex = Math.floor(Math.floor(Math.random() * (sceneResults.length + 1)));
       const sceneTimestamp = +sceneResults[sceneIndex].Timestamp;
       const sceneEpisode = sceneResults[sceneIndex].Episode;
       const { data: gifResult } = await api.get(

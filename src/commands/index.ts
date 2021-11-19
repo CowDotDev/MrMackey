@@ -7,6 +7,7 @@ import CustomCommands from '#commands/custom';
 import Drugs from '#commands/drugs';
 import Pizza from '#commands/pizza';
 import Ram from '#commands/ram';
+import Roll from '#commands/roll';
 import Urban from '#commands/urban';
 import Xkcd from '#commands/xkcd';
 
@@ -18,6 +19,7 @@ const initCommands = async (customCommands: CustomCommands): Promise<void> => {
   GlobalCommands.set(Drugs.data.name, Drugs);
   GlobalCommands.set(Pizza.data.name, Pizza);
   GlobalCommands.set(Ram.data.name, Ram);
+  GlobalCommands.set(Roll.data.name, Roll);
   GlobalCommands.set(Urban.data.name, Urban);
   GlobalCommands.set(Xkcd.data.name, Xkcd);
 
