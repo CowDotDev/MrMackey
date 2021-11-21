@@ -1,4 +1,4 @@
-import { Firestore } from '@google-cloud/firestore';
+import { FieldValue, Firestore } from '@google-cloud/firestore';
 
 export const converter = <T>() => ({
   toFirestore: (data: T) => data,
@@ -11,7 +11,8 @@ const db = new Firestore({
 });
 
 export const Collections = {
-  CustomCommands: (guildId: string) => db.collection(`custom-commands-${guildId}`),
+  CustomCommands: db.collection('custom-commands'),
+  Karma: db.collection(`karma`),
 };
 
 export function fetchCollectionList() {

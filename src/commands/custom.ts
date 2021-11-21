@@ -55,15 +55,12 @@ class CustomCommands {
       },
     } as CommandObject;
 
-    await Collections.CustomCommands(guildId)
-      .withConverter(converter<ICustomCommand>())
-      .doc(command)
-      .set({
-        guildId,
-        command,
-        reaction,
-        user,
-      });
+    await Collections.CustomCommands.withConverter(converter<ICustomCommand>()).doc(command).set({
+      guildId,
+      command,
+      reaction,
+      user,
+    });
 
     const guildCustomCommands =
       this.customCommands.get(guildId) || new Collection<string, CommandObject>();
@@ -167,38 +164,26 @@ class CustomCommands {
   async getExistingCustomCommands(): Promise<
     Collection<string, Collection<string, CommandObject>>
   > {
-    const collectionList = await fetchCollectionList();
-    const customCommandsCollections = collectionList.filter((collection) =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      collection?.id?.includes('custom-commands'),
-    );
-    const existingGuildIds = customCommandsCollections.map((collection) =>
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-      collection.id.replace('custom-commands', ''),
-    );
+    const existingCustomCommands = await Collections.CustomCommands.withConverter(
+      converter<ICustomCommand>(),
+    ).get();
 
-    for (const guildId of existingGuildIds) {
-      const existingCustomCommands = await Collections.CustomCommands(guildId)
-        .withConverter(converter<ICustomCommand>())
-        .get();
+    existingCustomCommands.forEach((doc) => {
+      const docData = doc.data();
+      const cmd = {
+        data: new SlashCommandBuilder()
+          .setName(docData.command)
+          .setDescription(`Custom command created by ${docData.user}`),
+        execute: async (interaction) => {
+          await interaction.reply(docData.reaction);
+        },
+      } as CommandObject;
 
-      existingCustomCommands.forEach((doc) => {
-        const docData = doc.data();
-        const cmd = {
-          data: new SlashCommandBuilder()
-            .setName(docData.command)
-            .setDescription(`Custom command created by ${docData.user}`),
-          execute: async (interaction) => {
-            await interaction.reply(docData.reaction);
-          },
-        } as CommandObject;
-
-        const guildCustomCommands =
-          this.customCommands.get(guildId) || new Collection<string, CommandObject>();
-        guildCustomCommands.set(cmd.data.name, cmd);
-        this.customCommands.set(guildId, guildCustomCommands);
-      });
-    }
+      const guildCustomCommands =
+        this.customCommands.get(docData.guildId) || new Collection<string, CommandObject>();
+      guildCustomCommands.set(cmd.data.name, cmd);
+      this.customCommands.set(docData.guildId, guildCustomCommands);
+    });
 
     return this.customCommands;
   }

@@ -7,10 +7,11 @@ import { Client, Intents } from 'discord.js';
 
 import { Routes } from 'discord-api-types/v9';
 import CustomCommands from '#commands/custom';
+import { checkMessageForKarma } from '#commands/karma';
 
 let CommandsService;
 
-export const client = new Client({ intents: [Intents.FLAGS.GUILDS] });
+export const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 
 export const login = async () => {
   const botMode = await getSecret('bot-mode');
@@ -90,6 +91,12 @@ export const login = async () => {
         await interaction.update({ content: 'Command was not updated.', components: [] });
       }
     }
+  });
+
+  // In-text Chat Commands Handler
+  client.on('messageCreate', async (message) => {
+    if (message.author.bot) return;
+    await checkMessageForKarma(message);
   });
 
   // Login to Discord with your client's token
