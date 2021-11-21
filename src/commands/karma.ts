@@ -132,7 +132,7 @@ const getServerTotals = async (
     const responses: string[] = [];
     for (let i = 0; i < serverKarmaRankings.length; i++) {
       let rank = `**${i + 1}.**`;
-      if (rank === '1') {
+      if (i === 0) {
         rank = `👑 ${rank}`;
       } else if (serverKarmaRankings.length - 1 === i) {
         rank = `💩 ${rank}`;
