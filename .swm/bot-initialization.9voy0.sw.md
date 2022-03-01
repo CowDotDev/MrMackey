@@ -1,6 +1,6 @@
 ---
 id: 9voy0
-name: Application Initialization
+name: Bot Initialization
 file_version: 1.0.2
 app_version: 0.7.5-0
 file_blobs:
@@ -236,14 +236,14 @@ After we set all of our bot's commands and initialize all of the event listeners
   await client.login(botToken);
 ```
 
-<span id="f-2dcunz">CommandsService</span>[^](#2dcunz) - "src/lib/client.ts" L45
-```typescript
-    await initCommands(CommandsService);
-```
-
 <span id="f-F2C4R">CommandsService</span>[^](#F2C4R) - "src/lib/client.ts" L42
 ```typescript
     CommandsService = new CustomCommands(botToken, clientId);
+```
+
+<span id="f-2dcunz">CommandsService</span>[^](#2dcunz) - "src/lib/client.ts" L45
+```typescript
+    await initCommands(CommandsService);
 ```
 
 <span id="f-1aUp6S">CommandsService.registerCustomCommands</span>[^](#1aUp6S) - "src/lib/client.ts" L51
@@ -281,24 +281,24 @@ export const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS
 export const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
 ```
 
-<span id="f-ZXWYDD">interactionCreate</span>[^](#ZXWYDD) - "src/lib/client.ts" L82
-```typescript
-  client.on('interactionCreate', async (interaction) => {
-```
-
 <span id="f-Z1w1Ttn">interactionCreate</span>[^](#Z1w1Ttn) - "src/lib/client.ts" L55
 ```typescript
   client.on('interactionCreate', async (interaction) => {
 ```
 
-<span id="f-171uF3">login</span>[^](#171uF3) - "src/lib/client.ts" L16
+<span id="f-ZXWYDD">interactionCreate</span>[^](#ZXWYDD) - "src/lib/client.ts" L82
 ```typescript
-export const login = async () => {
+  client.on('interactionCreate', async (interaction) => {
 ```
 
 <span id="f-1e8JSJ">login</span>[^](#1e8JSJ) - "index.ts" L1
 ```typescript
 import { login } from '#lib/client';
+```
+
+<span id="f-171uF3">login</span>[^](#171uF3) - "src/lib/client.ts" L16
+```typescript
+export const login = async () => {
 ```
 
 <span id="f-21uvf1">messageCreate</span>[^](#21uvf1) - "src/lib/client.ts" L97
