@@ -26,11 +26,11 @@ You can read more about Discord.js here: [https://discordjs.guide/#before-you-be
 
 <br/>
 
-We initialize our new client and provide the [[sym-text:intents(e2295b1d-de25-40a4-af9a-33ee1ad289a4)]] (roles essentially) we need our Bot to have access to.
+We initialize our new client and provide the `intents`[<sup id="ZbDaxo">↓</sup>](#f-ZbDaxo) (roles essentially) we need our Bot to have access to.
 
-[[sym-text:Intents.FLAGS.GUILDS(14c6fe35-3bc7-478d-b058-99563554bc38)]] Allows the Bot to manage admin aspects of Guilds (Create, Update, Delete) as well as CRUD for Roles and Threads within Guilds.
+`Intents.FLAGS.GUILDS`[<sup id="NEDH5">↓</sup>](#f-NEDH5) Allows the Bot to manage admin aspects of Guilds (Create, Update, Delete) as well as CRUD for Roles and Threads within Guilds.
 
-[[sym-text:Intents.FLAGS.GUILD_MESSAGES(a332ed97-cd26-444b-bc54-e39f71312dc2)]] Allows the Bot to manage the messages sent to channels within a Guild, as well as send messages itself.
+`Intents.FLAGS.GUILD_MESSAGES`[<sup id="126OMl">↓</sup>](#f-126OMl) Allows the Bot to manage the messages sent to channels within a Guild, as well as send messages itself.
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 src/lib/client.ts
 ```typescript
@@ -45,11 +45,11 @@ We initialize our new client and provide the [[sym-text:intents(e2295b1d-de25-40
 
 <br/>
 
-From our [[sym-text:login(2a0e45ea-e109-4a2c-9c4a-8c2d2445cf60)]] method, we first request some secrets from our GCP Secret Manager.
+From our `login`[<sup id="171uF3">↓</sup>](#f-171uF3) method, we first request some secrets from our GCP Secret Manager.
 
-[[sym-text:bot-mode(061d750f-df73-4eb8-af26-1d92315c874e)]] allows us to toggle between a production bot and a test bot, so we can be running our production bot from our server and simultaneously run a different bot during local development.
+`bot-mode`[<sup id="ZLJYmE">↓</sup>](#f-ZLJYmE) allows us to toggle between a production bot and a test bot, so we can be running our production bot from our server and simultaneously run a different bot during local development.
 
-[[sym-text:bot-token(dc804dba-f0b7-4ced-8de6-4531fb84ddab)]] ,[[sym-text:test-bot-token(fa9e68a3-e4b5-4210-b008-c6fb8632a65b)]] , [[sym-text:bot-client-id(3464b28d-3d6f-4f93-9221-7826a48f5e4b)]] , and [[sym-text:test-bot-client-id(4f6aaf88-2438-4086-a9e0-27860ed6194d)]] are all configuration variables for the specific bot we want to activate. If [[sym-text:bot-mode(061d750f-df73-4eb8-af26-1d92315c874e)]] is equal to [[sym-text:prod(99db48c2-559e-4106-b473-3acb09d1dc84)]] then we will use our production bot secrets, otherwise, we will use our test bot's secrets.
+`bot-token`[<sup id="27jXep">↓</sup>](#f-27jXep) , `test-bot-token`[<sup id="Er0z7">↓</sup>](#f-Er0z7) , `bot-client-id`[<sup id="jEQ5D">↓</sup>](#f-jEQ5D) , and `test-bot-client-id`[<sup id="ZK9JNh">↓</sup>](#f-ZK9JNh) are all configuration variables for the specific bot we want to activate. If `bot-mode`[<sup id="ZLJYmE">↓</sup>](#f-ZLJYmE) is equal to `prod`[<sup id="Z2plpWj">↓</sup>](#f-Z2plpWj) then we will use our production bot secrets, otherwise, we will use our test bot's secrets.
 
 In the future, we could remove our test bot secrets from GCP Secret Manager and instead retrieve those details from a `.env` file that is ignored from our repository. This would allow any developer to use their own bot for local testing, as multiple developers cannot simultaneously use the same test bot locally.
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
@@ -70,13 +70,13 @@ In the future, we could remove our test bot secrets from GCP Secret Manager and 
 
 <br/>
 
-When the client is "ready", which occurs after we initiate client login, we create our [[sym-text:CommandsService(53da3e46-3e5e-47cd-be49-cc736cdf3d0e)]] from the[[sym-text:CustomCommands(9acaf8af-c383-4278-9233-67615a7cb881)]] class which manages all the custom commands a bot has been taught across all the guilds it resides in.
+When the client is "ready", which occurs after we initiate client login, we create our `CommandsService`[<sup id="F2C4R">↓</sup>](#f-F2C4R) from the `CustomCommands`[<sup id="ZK5MUX">↓</sup>](#f-ZK5MUX) class which manages all the custom commands a bot has been taught across all the guilds it resides in.
 
-First using [[sym-text:initCommands(3fa1dd6a-6f48-407c-9bc1-05f9c01a93fa)]] , we create create the Global Commands that the bot will know in all of the Guilds it resides in. We pass [[sym-text:CommandsService(e2bf1eb5-d37f-4e11-b4f7-843b20c020b5)]] to [[sym-text:initCommands(3fa1dd6a-6f48-407c-9bc1-05f9c01a93fa)]] in order to populate [[sym-text:CommandsService(e2bf1eb5-d37f-4e11-b4f7-843b20c020b5)]] with the initial set of Global Commands - this allows us to block the creation of any custom commands with names that conflict with existing Global Commands. [[sym-text:initCommands(3fa1dd6a-6f48-407c-9bc1-05f9c01a93fa)]] can be viewed in [[sym:./src/commands/index.ts(13210cd6-e299-4af4-9f51-ec7e54ea4cb8)]] .
+First using `initCommands`[<sup id="Z1d5gz2">↓</sup>](#f-Z1d5gz2) , we create create the Global Commands that the bot will know in all of the Guilds it resides in. We pass `CommandsService`[<sup id="F2C4R">↓</sup>](#f-F2C4R) to `initCommands`[<sup id="Z1d5gz2">↓</sup>](#f-Z1d5gz2) in order to populate `CommandsService`[<sup id="F2C4R">↓</sup>](#f-F2C4R) with the initial set of Global Commands - this allows us to block the creation of any custom commands with names that conflict with existing Global Commands. `initCommands`[<sup id="Z1d5gz2">↓</sup>](#f-Z1d5gz2) can be viewed in `📄 src/commands/index.ts` .
 
-Next, [[sym-text:registerGlobalSlashCommands(797e2f68-2adb-403d-a54e-9a787a694cf5)]] will take the Global Commands and register them with Discord. This will update any existing commands with any changes that were made, as well as add any new commands.
+Next, `registerGlobalSlashCommands`[<sup id="cLqj2">↓</sup>](#f-cLqj2) will take the Global Commands and register them with Discord. This will update any existing commands with any changes that were made, as well as add any new commands.
 
-Last, [[sym-text:CommandsService.registerCustomCommands(f38ffc87-de59-4876-9afd-c09eba7077fa)]] will then register all of the custom commands the bot has been taught. However, these custom commands will only be registered to the guilds that taught him the command.
+Last, `CommandsService.registerCustomCommands`[<sup id="1aUp6S">↓</sup>](#f-1aUp6S) will then register all of the custom commands the bot has been taught. However, these custom commands will only be registered to the guilds that taught him the command.
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 src/lib/client.ts
 ```typescript
@@ -105,13 +105,13 @@ Last, [[sym-text:CommandsService.registerCustomCommands(f38ffc87-de59-4876-9afd-
 
 <br/>
 
-[[sym-text:interactionCreate(e345b4dc-7837-4dd2-b1d3-12b4b60f61d6)]] hook is fired anytime a user triggers an 'interaction' with out bot.
+`interactionCreate`[<sup id="Z1w1Ttn">↓</sup>](#f-Z1w1Ttn) hook is fired anytime a user triggers an 'interaction' with out bot.
 
 This hook handler is only responsible for handling slash commands, both global and custom. First it will check if this command is a recognized global command, or if it matches a custom command in this guild.
 
 If a match is found, the bot will attempt to execute the command - if there is any error the bot will respond with a message indicating such.
 
-If no match is found, the bot will respond stating such. [[sym-text:ephemeral(4300d366-26ac-48e0-bc4e-2d7a97cec27f)]] tells the bot whether the response should be viewable only by the person who triggered the command, or if everyone should see the response. Since this is an error message, we want this only to be viewable by the user who triggered this command, as to not muddy the chat.
+If no match is found, the bot will respond stating such. `ephemeral`[<sup id="Z26FeFt">↓</sup>](#f-Z26FeFt) tells the bot whether the response should be viewable only by the person who triggered the command, or if everyone should see the response. Since this is an error message, we want this only to be viewable by the user who triggered this command, as to not muddy the chat.
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 src/lib/client.ts
 ```typescript
@@ -151,7 +151,7 @@ If no match is found, the bot will respond stating such. [[sym-text:ephemeral(43
 
 <br/>
 
-This [[sym-text:interactionCreate(c12f52a8-cae2-4b72-8840-897b013e85a2)]] is responsible for handle select menu interactions. Currently, the only implementation of a select menu is when a user attempts to update an existing custom command.
+This `interactionCreate`[<sup id="ZXWYDD">↓</sup>](#f-ZXWYDD) is responsible for handle select menu interactions. Currently, the only implementation of a select menu is when a user attempts to update an existing custom command.
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 src/lib/client.ts
 ```typescript
@@ -179,7 +179,7 @@ This [[sym-text:interactionCreate(c12f52a8-cae2-4b72-8840-897b013e85a2)]] is res
 
 <br/>
 
-The last event handler we set-up is [[sym-text:messageCreate(28e8ae12-948e-4319-9e4b-826d2ad632eb)]] , this will fire every time a message is sent by any user in a guild this bot resides in. Our bot will ignore any message that a bot creates, and any message a real user creates will be checked for any inline chat commands, currently the karma system is our only inline chat command.
+The last event handler we set-up is `messageCreate`[<sup id="21uvf1">↓</sup>](#f-21uvf1) , this will fire every time a message is sent by any user in a guild this bot resides in. Our bot will ignore any message that a bot creates, and any message a real user creates will be checked for any inline chat commands, currently the karma system is our only inline chat command.
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 src/lib/client.ts
 ```typescript
@@ -198,7 +198,7 @@ The last event handler we set-up is [[sym-text:messageCreate(28e8ae12-948e-4319-
 
 <br/>
 
-After we set all of our bot's commands and initialize all of the event listeners, we call [[sym-text:client.login(f105b1b0-203d-4e77-98a8-00c28887840b)]] to turn on our bot. Once this occurs, if the bot is successfully stood up we will see "Bot Ready" logged as the "ready" event will be triggered, and our bot should now be showing online in any guild it resides in.
+After we set all of our bot's commands and initialize all of the event listeners, we call `client.login`[<sup id="2kPpM1">↓</sup>](#f-2kPpM1) to turn on our bot. Once this occurs, if the bot is successfully stood up we will see "Bot Ready" logged as the "ready" event will be triggered, and our bot should now be showing online in any guild it resides in.
 <!-- NOTE-swimm-snippet: the lines below link your snippet to Swimm -->
 ### 📄 src/lib/client.ts
 ```typescript
@@ -216,9 +216,109 @@ After we set all of our bot's commands and initialize all of the event listeners
 <!-- THIS IS AN AUTOGENERATED SECTION. DO NOT EDIT THIS SECTION DIRECTLY -->
 ### Swimm Note
 
+<span id="f-jEQ5D">bot-client-id</span>[^](#jEQ5D) - "src/lib/client.ts" L21
+```typescript
+    botMode === 'prod' ? await getSecret('bot-client-id') : await getSecret('test-bot-client-id');
+```
+
+<span id="f-ZLJYmE">bot-mode</span>[^](#ZLJYmE) - "src/lib/client.ts" L17
+```typescript
+  const botMode = await getSecret('bot-mode');
+```
+
+<span id="f-27jXep">bot-token</span>[^](#27jXep) - "src/lib/client.ts" L19
+```typescript
+    botMode === 'prod' ? await getSecret('bot-token') : await getSecret('test-bot-token');
+```
+
+<span id="f-2kPpM1">client.login</span>[^](#2kPpM1) - "src/lib/client.ts" L103
+```typescript
+  await client.login(botToken);
+```
+
+<span id="f-F2C4R">CommandsService</span>[^](#F2C4R) - "src/lib/client.ts" L42
+```typescript
+    CommandsService = new CustomCommands(botToken, clientId);
+```
+
+<span id="f-1aUp6S">CommandsService.registerCustomCommands</span>[^](#1aUp6S) - "src/lib/client.ts" L51
+```typescript
+    await CommandsService.registerCustomCommands();
+```
+
+<span id="f-ZK5MUX">CustomCommands</span>[^](#ZK5MUX) - "src/lib/client.ts" L42
+```typescript
+    CommandsService = new CustomCommands(botToken, clientId);
+```
+
 <span id="f-2viVCg">discord.js</span>[^](#2viVCg) - "src/lib/client.ts" L6
 ```typescript
 import { Client, Intents } from 'discord.js';
+```
+
+<span id="f-Z26FeFt">ephemeral</span>[^](#Z26FeFt) - "src/lib/client.ts" L63
+```typescript
+        ephemeral: true,
+```
+
+<span id="f-Z1d5gz2">initCommands</span>[^](#Z1d5gz2) - "src/lib/client.ts" L45
+```typescript
+    await initCommands(CommandsService);
+```
+
+<span id="f-ZbDaxo">intents</span>[^](#ZbDaxo) - "src/lib/client.ts" L14
+```typescript
+export const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+```
+
+<span id="f-126OMl">Intents.FLAGS.GUILD_MESSAGES</span>[^](#126OMl) - "src/lib/client.ts" L14
+```typescript
+export const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+```
+
+<span id="f-NEDH5">Intents.FLAGS.GUILDS</span>[^](#NEDH5) - "src/lib/client.ts" L14
+```typescript
+export const client = new Client({ intents: [Intents.FLAGS.GUILDS, Intents.FLAGS.GUILD_MESSAGES] });
+```
+
+<span id="f-ZXWYDD">interactionCreate</span>[^](#ZXWYDD) - "src/lib/client.ts" L82
+```typescript
+  client.on('interactionCreate', async (interaction) => {
+```
+
+<span id="f-Z1w1Ttn">interactionCreate</span>[^](#Z1w1Ttn) - "src/lib/client.ts" L55
+```typescript
+  client.on('interactionCreate', async (interaction) => {
+```
+
+<span id="f-171uF3">login</span>[^](#171uF3) - "src/lib/client.ts" L16
+```typescript
+export const login = async () => {
+```
+
+<span id="f-21uvf1">messageCreate</span>[^](#21uvf1) - "src/lib/client.ts" L97
+```typescript
+  client.on('messageCreate', async (message) => {
+```
+
+<span id="f-Z2plpWj">prod</span>[^](#Z2plpWj) - "src/lib/client.ts" L19
+```typescript
+    botMode === 'prod' ? await getSecret('bot-token') : await getSecret('test-bot-token');
+```
+
+<span id="f-cLqj2">registerGlobalSlashCommands</span>[^](#cLqj2) - "src/lib/client.ts" L48
+```typescript
+    await registerGlobalSlashCommands();
+```
+
+<span id="f-ZK9JNh">test-bot-client-id</span>[^](#ZK9JNh) - "src/lib/client.ts" L21
+```typescript
+    botMode === 'prod' ? await getSecret('bot-client-id') : await getSecret('test-bot-client-id');
+```
+
+<span id="f-Er0z7">test-bot-token</span>[^](#Er0z7) - "src/lib/client.ts" L19
+```typescript
+    botMode === 'prod' ? await getSecret('bot-token') : await getSecret('test-bot-token');
 ```
 
 <br/>
